@@ -25,6 +25,7 @@
   "homepage": "https://github.com/Aratramba/jade-code-block",
   "devDependencies": {
     "faucet": "0.0.1",
+    "jade": "^1.11.0",
     "tape": "^4.2.0"
   }
 }
