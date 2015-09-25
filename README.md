@@ -1,5 +1,5 @@
-# jade-code-block
-get Jade code block.
+# Jade code block
+Get Jade code at and inside a given line or query.
 
 
 _doc.jade_
