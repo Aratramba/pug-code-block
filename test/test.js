@@ -36,3 +36,23 @@ test('by string not found', function(assert){
   assert.equal(block, '');
   assert.end();
 });
+
+// this doesn't add 'foo' yet
+test('jade output', function(assert){
+  var block = getCodeBlock.byLine(source, 16);
+  assert.comment(block)
+  var jade = require('jade');
+  var fn = jade.compile(block, {pretty:false});
+  assert.equal(fn(), '<div>foo<div> \nfaa</div></div>');
+  assert.end();
+});
+
+// this breaks still
+test('jade output', function(assert){
+  var block = getCodeBlock.byLine(source, 15);
+  assert.comment(block)
+  var jade = require('jade');
+  var fn = jade.compile(block, {pretty:false});
+  assert.equal(fn(), '<div>foo<div> \nfaa</div></div>');
+  assert.end();
+});
