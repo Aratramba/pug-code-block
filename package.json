@@ -1,0 +1,30 @@
+{
+  "name": "jade-code-block",
+  "version": "0.1.0",
+  "description": "get Jade code block",
+  "main": "index.js",
+  "scripts": {
+    "test": "tape test/**/*.js | faucet"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Aratramba/jade-code-block.git"
+  },
+  "keywords": [
+    "jade",
+    "indent",
+    "code",
+    "block",
+    "whitespace"
+  ],
+  "author": "Arjen Scherff-de Water",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Aratramba/jade-code-block/issues"
+  },
+  "homepage": "https://github.com/Aratramba/jade-code-block",
+  "devDependencies": {
+    "faucet": "0.0.1",
+    "tape": "^4.2.0"
+  }
+}
