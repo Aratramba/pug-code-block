@@ -47,16 +47,6 @@ test('By string: not found', function(assert){
   assert.end();
 });
 
-test('Jade output', function(assert){
-  var block = getCodeBlock.byLine(source, 18);
-  var jade = require('jade');
-  var actual = jade.compile(block, {pretty:false})();
-  var expected = '<div>foo<div> \nfaa</div></div>';
-
-  assert.equal(actual, expected, 'Given jade input it should produce html.');
-  assert.end();
-});
-
 test('From line to line', function(assert){
   var actual = getCodeBlock.fromLineToLine(source, 1, 9);
   var expected = 'mixin foo\n  div\n    | foo\n    | foo\n\nmixin bar\n  div\n    | bar\n    | bar';
@@ -86,5 +76,15 @@ test('From string to string: not found', function(assert){
   var expected = '';
 
   assert.equal(actual, expected, 'When no match is found for string 2, it should return an empty string.');
+  assert.end();
+});
+
+test('Jade output', function(assert){
+  var block = getCodeBlock.byLine(source, 18);
+  var jade = require('jade');
+  var actual = jade.compile(block, {pretty:false})();
+  var expected = '<div>foo<div> \nfaa</div></div>';
+
+  assert.equal(actual, expected, 'Given jade input it should produce html.');
   assert.end();
 });
