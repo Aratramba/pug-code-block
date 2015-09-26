@@ -9,21 +9,20 @@ var WHITESPACE_REGEX = /^\s*/g;
  * and ending at indent mismatch
  */
 
-function getCodeBlock(src, lineNumber, separator){
+function getCodeBlock(src, lineNumber){
   lineNumber = lineNumber-1;
   var lines = src.split('\n');
 
-  if(lineNumber < 0){
-    return '';
-  }
-
-  if(lineNumber > lines.length){
+  if(lineNumber < 0 || lineNumber > lines.length){
     return '';
   }
 
   var indent = lines[lineNumber].match(WHITESPACE_REGEX)[0].length;
   var block = [lines[lineNumber]];
-  var i = lineNumber + 1;
+  var i = lineNumber;
+
+  // remove first indent to comply with jade compiler
+  block[0] = block[0].trim();
 
   while(i++){
 
@@ -40,7 +39,7 @@ function getCodeBlock(src, lineNumber, separator){
     block.push(lines[i]);
   }
 
-  return block.join(separator || '\n');
+  return block.join('\n');
 }
 
 
@@ -48,8 +47,29 @@ function getCodeBlock(src, lineNumber, separator){
  * get code block by line
  */
 
-function byLine(src, lineNumber, separator){
-  return getCodeBlock(src, lineNumber, separator);
+function byLine(src, lineNumber){
+  return getCodeBlock(src, lineNumber);
+}
+
+
+/**
+ * find lineNumber of string
+ */
+
+function findStringIndex(src, string){
+  var lines = src.split('\n');
+  var i = 0;
+  var l = lines.length;
+  var index = null;
+
+  // find line
+  for(; i<l; ++i){
+    if(lines[i].indexOf(string) > -1){
+      index = i;
+      break;
+    }
+  }
+  return index;
 }
 
 
@@ -57,29 +77,48 @@ function byLine(src, lineNumber, separator){
  * get code block by string
  */
 
-function byString(src, string, separator){
-  var lines = src.split('\n');
-  var i = 0;
-  var l = lines.length;
-  var cursor = null;
-
-  // find line
-  for(; i<l; ++i){
-    if(lines[i].indexOf(string) > -1){
-      cursor = i;
-      break;
-    }
-  }
+function byString(src, string){
+  var index = findStringIndex(src, string);
 
   // no matches found
-  if(!cursor){
+  if(!index){
     return '';
   }
 
-  return byLine(src, cursor + 1, separator);
+  return byLine(src, index + 1);
 }
+
+
+/**
+ * From line to line
+ */
+
+function fromLineToLine(src, from, to){
+  var lines = src.split('\n');
+  return lines.slice(from - 1, to).join('\n');
+}
+
+
+/**
+ * From string to string
+ */
+
+function fromStringToString(src, from, to){
+  var fromIndex = findStringIndex(src, from);
+  var toIndex = findStringIndex(src, to);
+
+  if(!fromIndex || !toIndex){
+    return '';
+  }
+
+  return fromLineToLine(src, fromIndex + 1, toIndex + 1);
+}
+
+
 
 module.exports = {
   byLine: byLine,
-  byString: byString
+  byString: byString,
+  fromLineToLine: fromLineToLine,
+  fromStringToString: fromStringToString
 };
