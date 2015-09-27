@@ -35,29 +35,3 @@ getCodeBlock.byString(source, 'body');
 //   h1 Hello #{name}
 //   p foo
 ```
-
-_fromLineToLine.js_
-```js
-var source = fs.readFileSync('./doc.jade', 'utf8');
-
-var getCodeBlock = require('../index.js');
-getCodeBlock.fromLineToLine(source, 1, 5);
-
-// doctype html
-// html
-//   head
-//     title my jade template
-//   body
-```
-
-_fromStringToString.js_
-```js
-var source = fs.readFileSync('./doc.jade', 'utf8');
-
-var getCodeBlock = require('../index.js');
-getCodeBlock.fromStringToString(source, 'head', 'body');
-
-//   head
-//     title my jade template
-//   body
-```
