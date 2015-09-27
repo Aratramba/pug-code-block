@@ -89,36 +89,8 @@ function byString(src, string){
 }
 
 
-/**
- * From line to line
- */
-
-function fromLineToLine(src, from, to){
-  var lines = src.split('\n');
-  return lines.slice(from - 1, to).join('\n');
-}
-
-
-/**
- * From string to string
- */
-
-function fromStringToString(src, from, to){
-  var fromIndex = findStringIndex(src, from);
-  var toIndex = findStringIndex(src, to);
-
-  if(!fromIndex || !toIndex){
-    return '';
-  }
-
-  return fromLineToLine(src, fromIndex + 1, toIndex + 1);
-}
-
-
 
 module.exports = {
   byLine: byLine,
-  byString: byString,
-  fromLineToLine: fromLineToLine,
-  fromStringToString: fromStringToString
+  byString: byString
 };
