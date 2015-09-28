@@ -1,5 +1,5 @@
 'use strict';
-/* global module, require */
+/* global module */
 
 var WHITESPACE_REGEX = /^\s*/g;
 
