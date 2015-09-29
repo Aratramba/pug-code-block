@@ -102,7 +102,7 @@ function afterBlockAtLine(src, lineNumber){
   var i = lineNumber-1;
   var currentIndent;
 
-  while(i++){
+  while(++i){
 
     if(typeof lines[i] === 'undefined'){
       break;
@@ -170,3 +170,7 @@ module.exports = {
   afterBlockAtLine: afterBlockAtLine,
   beforeBlockAtLine: beforeBlockAtLine
 };
+
+// var source = require('fs').readFileSync('./test/fixtures/doc.jade', 'utf8');
+// var c = afterBlockAtLine(source, 1);
+// console.log(c);

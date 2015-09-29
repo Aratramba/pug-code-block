@@ -1,6 +1,6 @@
 {
   "name": "jade-code-block",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "get Jade code block",
   "main": "index.js",
   "scripts": {
