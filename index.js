@@ -17,7 +17,7 @@ function getCodeBlock(src, lineNumber){
     return '';
   }
 
-  var indent = lines[lineNumber].match(WHITESPACE_REGEX)[0].length;
+  var indent = getIndentLevel(lines[lineNumber]);
   var block = [lines[lineNumber]];
   var i = lineNumber;
 
@@ -29,7 +29,7 @@ function getCodeBlock(src, lineNumber){
     }
 
     // indent match breaks
-    if(lines[i].match(WHITESPACE_REGEX)[0].length <= indent){
+    if(getIndentLevel(lines[i]) <= indent){
       break;
     }
 
@@ -38,6 +38,16 @@ function getCodeBlock(src, lineNumber){
 
   return block.join('\n');
 }
+
+
+/**
+ * Get indent level of line
+ */
+
+function getIndentLevel(line){
+  return line.match(WHITESPACE_REGEX)[0].length;
+}
+
 
 
 /**
@@ -50,10 +60,10 @@ function byLine(src, lineNumber){
 
 
 /**
- * find lineNumber of string
+ * get code block by string
  */
 
-function findStringIndex(src, string){
+function byString(src, string){
   var lines = src.split('\n');
   var i = 0;
   var l = lines.length;
@@ -66,16 +76,6 @@ function findStringIndex(src, string){
       break;
     }
   }
-  return index;
-}
-
-
-/**
- * get code block by string
- */
-
-function byString(src, string){
-  var index = findStringIndex(src, string);
 
   // no matches found
   if(!index){
@@ -86,8 +86,87 @@ function byString(src, string){
 }
 
 
+/**
+ * Get code block after code block at line
+ */
+
+function afterBlockAtLine(src, lineNumber){
+  var lines = src.split('\n');
+
+  // bail at last line
+  if(lineNumber <= 0 || lineNumber >= lines.length){
+    return '';
+  }
+
+  var indent = getIndentLevel(lines[lineNumber-1]);
+  var i = lineNumber-1;
+  var currentIndent;
+
+  while(i++){
+
+    if(typeof lines[i] === 'undefined'){
+      break;
+    }
+
+    currentIndent = getIndentLevel(lines[i]);
+
+    if(lines[i].trim() !== ''){
+      if(currentIndent < indent){
+        break;
+      }
+
+      if(currentIndent === indent){
+        return getCodeBlock(src, i + 1);
+      }
+    }
+  }
+
+  return '';
+}
+
+
+/**
+ * Get code block before code block at line
+ */
+
+function beforeBlockAtLine(src, lineNumber){
+  var lines = src.split('\n');
+
+  // bail at first line
+  if(lineNumber <= 0 || lineNumber >= lines.length){
+    return '';
+  }
+
+  var indent = getIndentLevel(lines[lineNumber-1]);
+  var i = lineNumber-1;
+  var currentIndent;
+
+  while(i--){
+
+    if(typeof lines[i] === 'undefined'){
+      break;
+    }
+
+    currentIndent = getIndentLevel(lines[i]);
+
+    if(lines[i].trim() !== ''){
+      if(currentIndent < indent){
+        break;
+      }
+
+      if(currentIndent === indent){
+        return getCodeBlock(src, i + 1);
+      }
+    }
+  }
+
+  return '';
+}
+
 
 module.exports = {
   byLine: byLine,
-  byString: byString
+  byString: byString,
+  afterBlockAtLine: afterBlockAtLine,
+  beforeBlockAtLine: beforeBlockAtLine
 };

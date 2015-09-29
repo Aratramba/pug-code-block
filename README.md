@@ -13,7 +13,7 @@ html
     p foo
 ```
 
-_byLine.js_
+### Get block at line number
 ```js
 var source = fs.readFileSync('./doc.jade', 'utf8');
 
@@ -24,7 +24,7 @@ getCodeBlock.byLine(source, 3);
 //   title my jade template
 ```
 
-_byString.js_
+### Get block at string match
 ```js
 var source = fs.readFileSync('./doc.jade', 'utf8');
 
@@ -34,4 +34,27 @@ getCodeBlock.byString(source, 'body');
 // body
 //   h1 Hello #{name}
 //   p foo
+```
+
+### Get block after block at line
+```js
+var source = fs.readFileSync('./doc.jade', 'utf8');
+
+var getCodeBlock = require('../index.js');
+getCodeBlock.afterBlockAtLine(source, 3);
+
+//  body
+//    h1 Hello #{name}
+//    p foo
+```
+
+### Get block before block at line
+```js
+var source = fs.readFileSync('./doc.jade', 'utf8');
+
+var getCodeBlock = require('../index.js');
+getCodeBlock.beforeBlockAtLine(source, 5);
+
+//  head
+//    title my jade template
 ```
