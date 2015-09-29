@@ -21,9 +21,6 @@ function getCodeBlock(src, lineNumber){
   var block = [lines[lineNumber]];
   var i = lineNumber;
 
-  // remove first indent to comply with jade compiler
-  block[0] = block[0].trim();
-
   while(++i){
 
     // end of file
