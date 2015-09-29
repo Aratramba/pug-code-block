@@ -94,7 +94,3 @@ module.exports = {
   byLine: byLine,
   byString: byString
 };
-
-var fs = require('fs');
-var source = fs.readFileSync('./test/fixtures/doc.jade', 'utf8');
-byLine(source, 1);
