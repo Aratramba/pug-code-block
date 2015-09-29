@@ -24,7 +24,7 @@ function getCodeBlock(src, lineNumber){
   // remove first indent to comply with jade compiler
   block[0] = block[0].trim();
 
-  while(i++){
+  while(++i){
 
     // end of file
     if(typeof lines[i] === 'undefined'){
@@ -94,3 +94,7 @@ module.exports = {
   byLine: byLine,
   byString: byString
 };
+
+var fs = require('fs');
+var source = fs.readFileSync('./test/fixtures/doc.jade', 'utf8');
+byLine(source, 1);

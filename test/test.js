@@ -15,6 +15,22 @@ test('By line', function(assert){
   assert.end();
 });
 
+test('By line: comment', function(assert){
+  var actual = getCodeBlock.byLine(source, 28);
+  var expected = '//- some comment\n  some indented comment\n  some indented comment';
+
+  assert.equal(actual, expected, 'From line 28 block should equal comment block.');
+  assert.end();
+});
+
+test('By line: line 1', function(assert){
+  var actual = getCodeBlock.byLine(source, 1);
+  var expected = 'mixin foo\n  div\n    | foo\n    | foo';
+
+  assert.equal(actual, expected, 'From line 1 block should equal mixin block.');
+  assert.end();
+});
+
 test('By line: linenumber less than 0', function(assert){
   var actual = getCodeBlock.byLine(source, 0);
   var expected = '';
