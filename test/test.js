@@ -73,6 +73,14 @@ test('By string: not found', function(assert){
   assert.end();
 });
 
+test('By string: first line', function(assert){
+  var actual = getCodeBlock.byString(source, 'mixin foo');
+  var expected = 'mixin foo\n  div\n    | foo\n    | foo';
+
+  assert.equal(actual, expected, 'Searching for "mixin foo" should return a complete mixin.');
+  assert.end();
+});
+
 
 /**
  * Test jade output

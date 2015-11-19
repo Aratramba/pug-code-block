@@ -78,7 +78,7 @@ function byString(src, string){
   }
 
   // no matches found
-  if(!index){
+  if(index === null){
     return '';
   }
 
