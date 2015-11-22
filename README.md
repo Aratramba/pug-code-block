@@ -25,6 +25,8 @@ getCodeBlock.byLine(source, 3);
 ```
 
 ### Get block at string match
+Will return a string for a single match, an array of code blocks when multiple matches are found.
+
 ```js
 var source = fs.readFileSync('./doc.jade', 'utf8');
 
