@@ -17,7 +17,7 @@ html
 ```js
 var source = fs.readFileSync('./doc.jade', 'utf8');
 
-var getCodeBlock = require('../index.js');
+var getCodeBlock = require('jade-code-block');
 getCodeBlock.byLine(source, 3);
 
 // head
@@ -25,10 +25,12 @@ getCodeBlock.byLine(source, 3);
 ```
 
 ### Get block at string match
+Will return a string for a single match, an array of code blocks when multiple matches are found.
+
 ```js
 var source = fs.readFileSync('./doc.jade', 'utf8');
 
-var getCodeBlock = require('../index.js');
+var getCodeBlock = require('jade-code-block');
 getCodeBlock.byString(source, 'body');
 
 // body
@@ -40,7 +42,7 @@ getCodeBlock.byString(source, 'body');
 ```js
 var source = fs.readFileSync('./doc.jade', 'utf8');
 
-var getCodeBlock = require('../index.js');
+var getCodeBlock = require('jade-code-block');
 getCodeBlock.afterBlockAtLine(source, 3);
 
 //  body
@@ -52,7 +54,7 @@ getCodeBlock.afterBlockAtLine(source, 3);
 ```js
 var source = fs.readFileSync('./doc.jade', 'utf8');
 
-var getCodeBlock = require('../index.js');
+var getCodeBlock = require('jade-code-block');
 getCodeBlock.beforeBlockAtLine(source, 5);
 
 //  head

@@ -69,20 +69,26 @@ function byString(src, string){
   var l = lines.length;
   var index = null;
 
+  var matches = [];
+
   // find line
   for(; i<l; ++i){
     if(lines[i].indexOf(string) > -1){
-      index = i;
-      break;
+      matches.push(byLine(src, i + 1));
     }
   }
 
-  // no matches found
-  if(index === null){
+  if(!matches.length){
     return '';
   }
 
-  return byLine(src, index + 1);
+  if(matches.length === 1){
+    return matches[0];
+  }
+
+  return matches;
+
+  // return byLine(src, index + 1);
 }
 
 

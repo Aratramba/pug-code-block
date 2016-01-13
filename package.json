@@ -1,6 +1,6 @@
 {
   "name": "pug-code-block",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "get Pug code block",
   "main": "index.js",
   "scripts": {
