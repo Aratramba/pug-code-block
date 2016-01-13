@@ -1,17 +1,18 @@
 {
-  "name": "jade-code-block",
-  "version": "0.1.6",
-  "description": "get Jade code block",
+  "name": "pug-code-block",
+  "version": "0.2.0",
+  "description": "get Pug code block",
   "main": "index.js",
   "scripts": {
     "test": "tape test/**/*.js | faucet"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/Aratramba/jade-code-block.git"
+    "url": "https://github.com/Aratramba/pug-code-block.git"
   },
   "keywords": [
     "jade",
+    "pug",
     "indent",
     "code",
     "block",
@@ -20,9 +21,9 @@
   "author": "Arjen Scherff-de Water",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Aratramba/jade-code-block/issues"
+    "url": "https://github.com/Aratramba/pug-code-block/issues"
   },
-  "homepage": "https://github.com/Aratramba/jade-code-block",
+  "homepage": "https://github.com/Aratramba/pug-code-block",
   "devDependencies": {
     "faucet": "0.0.1",
     "jade": "^1.11.0",
