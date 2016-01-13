@@ -29,11 +29,23 @@ function getCodeBlock(src, lineNumber){
     }
 
     // indent match breaks
-    if(getIndentLevel(lines[i]) <= indent){
-      break;
+    if(lines[i].trim() !== ''){
+      if(getIndentLevel(lines[i]) <= indent){
+        break;
+      }
     }
 
     block.push(lines[i]);
+  }
+
+  // remove empty lines from the end
+  var j = block.length;
+  while(--j){
+    if(block[j].trim() === '') {
+      block.pop();
+      continue;
+    }
+    break;
   }
 
   return block.join('\n');
@@ -67,7 +79,6 @@ function byString(src, string){
   var lines = src.split('\n');
   var i = 0;
   var l = lines.length;
-  var index = null;
 
   var matches = [];
 
@@ -87,8 +98,6 @@ function byString(src, string){
   }
 
   return matches;
-
-  // return byLine(src, index + 1);
 }
 
 

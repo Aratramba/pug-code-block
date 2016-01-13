@@ -59,7 +59,7 @@ test('By line: linenumber out of range', function(assert){
 
 test('By string', function(assert){
   var actual = getCodeBlock.byString(source, 'mixin bar');
-  var expected = ['mixin bar\n  div\n    | bar\n    | bar', 'mixin bar\n  div\n    | bar 2\n    | bar 2'];
+  var expected = [ 'mixin bar\n  div\n    | bar\n    | bar', 'mixin bar\n  div\n    | bar 2\n\n    \n    | bar 2' ];
 
   assert.deepEqual(actual, expected, 'Searching for "mixin bar" should return an array with two complete mixins.');
   assert.end();
