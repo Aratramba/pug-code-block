@@ -217,3 +217,41 @@ test('Before block at line: linenumber out of range', function(assert){
   assert.equal(actual, expected, 'Before block at line should return an empty string when linenumber doesnt exist.');
   assert.end();
 });
+
+
+/**
+ * Normalize code block
+ */
+
+test('Normalize', function(assert){
+  var actual = getCodeBlock.normalize('  div\n    div\n      div\n        p foo');
+  var expected = 'div\n  div\n    div\n      p foo';
+
+  assert.equal(actual, expected, 'Normalize should reset indents to its base level');
+  assert.end();
+});
+
+test('Normalize ignore', function(assert){
+  var actual = getCodeBlock.normalize('div\n  div\n    div\n      p foo');
+  var expected = 'div\n  div\n    div\n      p foo';
+
+  assert.equal(actual, expected, 'Normalize should not reset anything');
+  assert.end();
+});
+
+test('Normalize empty', function(assert){
+  var actual = getCodeBlock.normalize('');
+  var expected = '';
+
+  assert.equal(actual, expected, 'Normalize should not reset empty string');
+  assert.end();
+});
+
+test('Normalize tab', function(assert){
+  var actual = getCodeBlock.normalize(' div\n    div\n      div');
+  var expected = 'div\n   div\n     div';
+
+  assert.equal(actual, expected, 'Normalize should reset indents if they are tabs');
+  assert.end();
+});
+

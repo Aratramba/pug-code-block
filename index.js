@@ -179,9 +179,31 @@ function beforeBlockAtLine(src, lineNumber){
 }
 
 
+/**
+ * Normalize indentation
+ */
+
+function normalize(src) {
+  var lines = src.split('\n');
+  var indentLevel = getIndentLevel(lines[0]);
+
+  if(indentLevel === 0){
+    return src;
+  }
+
+  var i = 0;
+  var l = lines.length;
+  for(; i<l; ++i){
+    lines[i] = lines[i].substring(indentLevel)
+  }
+  return lines.join('\n');
+}
+
+
 module.exports = {
   byLine: byLine,
   byString: byString,
   afterBlockAtLine: afterBlockAtLine,
-  beforeBlockAtLine: beforeBlockAtLine
+  beforeBlockAtLine: beforeBlockAtLine,
+  normalize: normalize
 };

@@ -1,5 +1,5 @@
-# Jade code block
-Get Jade code at and inside a given line or query.
+# Pug code block
+Get Pug (Jade) code at and inside a given line or query.
 
 
 _doc.jade_
@@ -17,7 +17,7 @@ html
 ```js
 var source = fs.readFileSync('./doc.jade', 'utf8');
 
-var getCodeBlock = require('jade-code-block');
+var getCodeBlock = require('pug-code-block');
 getCodeBlock.byLine(source, 3);
 
 // head
@@ -30,7 +30,7 @@ Will return a string for a single match, an array of code blocks when multiple m
 ```js
 var source = fs.readFileSync('./doc.jade', 'utf8');
 
-var getCodeBlock = require('jade-code-block');
+var getCodeBlock = require('pug-code-block');
 getCodeBlock.byString(source, 'body');
 
 // body
@@ -42,7 +42,7 @@ getCodeBlock.byString(source, 'body');
 ```js
 var source = fs.readFileSync('./doc.jade', 'utf8');
 
-var getCodeBlock = require('jade-code-block');
+var getCodeBlock = require('pug-code-block');
 getCodeBlock.afterBlockAtLine(source, 3);
 
 //  body
@@ -54,9 +54,19 @@ getCodeBlock.afterBlockAtLine(source, 3);
 ```js
 var source = fs.readFileSync('./doc.jade', 'utf8');
 
-var getCodeBlock = require('jade-code-block');
+var getCodeBlock = require('pug-code-block');
 getCodeBlock.beforeBlockAtLine(source, 5);
 
 //  head
 //    title my jade template
+```
+
+### Normalize code block
+Resets the code block to zero indents at its base.
+
+```js
+var getCodeBlock = require('pug-code-block');
+getCodeBlock.normalize('        div\n          div')
+
+// div\n  div
 ```
