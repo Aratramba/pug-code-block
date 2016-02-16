@@ -85,9 +85,9 @@
 
 
 
-module.exports = {
-  byLine: byLine,
-  byString: byString,
-  // afterBlockAtLine: afterBlockAtLine,
-  // beforeBlockAtLine: beforeBlockAtLine,
-};
+// module.exports = {
+//   byLine: byLine,
+//   byString: byString,
+//   // afterBlockAtLine: afterBlockAtLine,
+//   // beforeBlockAtLine: beforeBlockAtLine,
+// };
