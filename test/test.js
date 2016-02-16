@@ -52,7 +52,7 @@ test('By line: linenumber out of range', function(assert){
   assert.end();
 });
 
-
+return
 /**
  * By string
  */

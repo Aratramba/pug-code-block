@@ -1,54 +1,84 @@
 'use strict';
-/* global module */
+/* global require, module */
+
+var lex = require('pug-lexer');
 
 var WHITESPACE_REGEX = /^\s*/g;
 
+function getCodeBlockEnd(src) {
+  var tokens = lex(src);
+  var indent = 0;
+  var end = 0;
+
+  var i = 0;
+  var token;
+
+  while (token = tokens[i++]) {
+
+    // increase for indent
+    if (token.type === 'indent') {
+      indent++;
+
+    // decrease for outdent
+    } else if (token.type === 'outdent') {
+      indent--;
+
+    // increase for pipeless text
+    } else if (token.type === 'start-pipeless-text') {
+      indent++;
+    
+    // increase for pipeless text
+    } else if (token.type === 'end-pipeless-text') {
+      indent--;
+    }
+
+    end = token.line;
+
+    // quit at indent match
+    if (i > 1 && indent === 0) {
+      break;
+    }
+  }
+
+  return end;
+}
+
 
 /**
- * get code block starting at line
- * and ending at indent mismatch
+ * Get code block
  */
 
-function getCodeBlock(src, lineNumber){
-  lineNumber = lineNumber-1;
+function getCodeBlock(src, lineNumber) {
+
   var lines = src.split('\n');
 
-  if(lineNumber < 0 || lineNumber > lines.length){
+  if(lineNumber <= 0 || lineNumber > lines.length){
     return '';
   }
 
-  var indent = getIndentLevel(lines[lineNumber]);
-  var block = [lines[lineNumber]];
-  var i = lineNumber;
+  // create smaller portion from line number to end
+  lines = lines.slice(lineNumber - 1);
 
-  while(++i){
+  // add final newline
+  lines.push('\n');
 
-    // end of file
-    if(typeof lines[i] === 'undefined'){
-      break;
-    }
+  // get end of block
+  var blockEnd = getCodeBlockEnd(lines.join('\n'));
 
-    // indent match breaks
-    if(lines[i].trim() !== ''){
-      if(getIndentLevel(lines[i]) <= indent){
-        break;
-      }
-    }
+  // get the block we need
+  lines = lines.slice(0, blockEnd - 1);
 
-    block.push(lines[i]);
-  }
-
-  // remove empty lines from the end
-  var j = block.length;
+  // remove empty lines at the end
+  var j = lines.length;
   while(--j){
-    if(block[j].trim() === '') {
-      block.pop();
+    if(lines[j].trim() === '') {
+      lines.pop();
       continue;
     }
     break;
   }
 
-  return block.join('\n');
+  return lines.join('\n');
 }
 
 
@@ -194,7 +224,7 @@ function normalize(src) {
   var i = 0;
   var l = lines.length;
   for(; i<l; ++i){
-    lines[i] = lines[i].substring(indentLevel)
+    lines[i] = lines[i].substring(indentLevel);
   }
   return lines.join('\n');
 }
