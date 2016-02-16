@@ -5,6 +5,12 @@ var lex = require('pug-lexer');
 
 var WHITESPACE_REGEX = /^\s*/g;
 
+
+/**
+ * get code block starting at line
+ * and ending at indent mismatch
+ */
+
 function getCodeBlockEnd(src) {
   var tokens = lex(src);
   var indent = 0;
@@ -43,13 +49,15 @@ function getCodeBlockEnd(src) {
   return end;
 }
 
+module.exports.getCodeBlockEnd = getCodeBlockEnd;
+
+
 
 /**
  * Get code block
  */
 
 function getCodeBlock(src, lineNumber) {
-
   var lines = src.split('\n');
 
   if(lineNumber <= 0 || lineNumber > lines.length){
@@ -58,6 +66,9 @@ function getCodeBlock(src, lineNumber) {
 
   // create smaller portion from line number to end
   lines = lines.slice(lineNumber - 1);
+
+  // reset base indent
+  lines = normalize(lines);
 
   // add final newline
   lines.push('\n');
@@ -68,18 +79,50 @@ function getCodeBlock(src, lineNumber) {
   // get the block we need
   lines = lines.slice(0, blockEnd - 1);
 
-  // remove empty lines at the end
-  var j = lines.length;
-  while(--j){
-    if(lines[j].trim() === '') {
-      lines.pop();
-      continue;
+  if (lines.length) {
+    // remove empty lines at the end
+    var j = lines.length;
+    while(--j){
+      if(lines[j].trim() === '') {
+        lines.pop();
+        continue;
+      }
+      break;
     }
-    break;
   }
 
   return lines.join('\n');
 }
+
+module.exports.getCodeBlock = getCodeBlock;
+
+
+
+/**
+ * Normalize indentation
+ */
+
+function normalize(lines) {
+  if (!lines.length) {
+    return lines;
+  }
+
+  var indentLevel = getIndentLevel(lines[0]);
+
+  if(indentLevel === 0){
+    return lines;
+  }
+
+  var i = 0;
+  var l = lines.length;
+  for(; i<l; ++i){
+    lines[i] = lines[i].substring(indentLevel);
+  }
+  return lines;
+}
+
+module.exports.normalize = normalize;
+
 
 
 /**
@@ -90,6 +133,8 @@ function getIndentLevel(line){
   return line.match(WHITESPACE_REGEX)[0].length;
 }
 
+module.exports.getIndentLevel = getIndentLevel;
+
 
 
 /**
@@ -99,6 +144,8 @@ function getIndentLevel(line){
 function byLine(src, lineNumber){
   return getCodeBlock(src, lineNumber);
 }
+
+module.exports.byLine = byLine;
 
 
 /**
@@ -130,110 +177,4 @@ function byString(src, string){
   return matches;
 }
 
-
-/**
- * Get code block after code block at line
- */
-
-function afterBlockAtLine(src, lineNumber){
-  var lines = src.split('\n');
-
-  // bail at last line
-  if(lineNumber <= 0 || lineNumber >= lines.length){
-    return '';
-  }
-
-  var indent = getIndentLevel(lines[lineNumber-1]);
-  var i = lineNumber-1;
-  var currentIndent;
-
-  while(++i){
-
-    if(typeof lines[i] === 'undefined'){
-      break;
-    }
-
-    currentIndent = getIndentLevel(lines[i]);
-
-    if(lines[i].trim() !== ''){
-      if(currentIndent < indent){
-        break;
-      }
-
-      if(currentIndent === indent){
-        return getCodeBlock(src, i + 1);
-      }
-    }
-  }
-
-  return '';
-}
-
-
-/**
- * Get code block before code block at line
- */
-
-function beforeBlockAtLine(src, lineNumber){
-  var lines = src.split('\n');
-
-  // bail at first line
-  if(lineNumber <= 0 || lineNumber >= lines.length){
-    return '';
-  }
-
-  var indent = getIndentLevel(lines[lineNumber-1]);
-  var i = lineNumber-1;
-  var currentIndent;
-
-  while(i--){
-
-    if(typeof lines[i] === 'undefined'){
-      break;
-    }
-
-    currentIndent = getIndentLevel(lines[i]);
-
-    if(lines[i].trim() !== ''){
-      if(currentIndent < indent){
-        break;
-      }
-
-      if(currentIndent === indent){
-        return getCodeBlock(src, i + 1);
-      }
-    }
-  }
-
-  return '';
-}
-
-
-/**
- * Normalize indentation
- */
-
-function normalize(src) {
-  var lines = src.split('\n');
-  var indentLevel = getIndentLevel(lines[0]);
-
-  if(indentLevel === 0){
-    return src;
-  }
-
-  var i = 0;
-  var l = lines.length;
-  for(; i<l; ++i){
-    lines[i] = lines[i].substring(indentLevel);
-  }
-  return lines.join('\n');
-}
-
-
-module.exports = {
-  byLine: byLine,
-  byString: byString,
-  afterBlockAtLine: afterBlockAtLine,
-  beforeBlockAtLine: beforeBlockAtLine,
-  normalize: normalize
-};
+module.exports.byString = byString;
