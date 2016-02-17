@@ -36,3 +36,12 @@ test('Normalize tab', function(assert){
   assert.deepEqual(actual, expected, 'Normalize should reset indents if they are tabs');
   assert.end();
 });
+
+
+test('Normalize outdented attributes', function(assert){
+  var actual = normalize('  a(href=""\ntitle=""\n)\n    | foo'.split('\n')).join('\n');
+  var expected = 'a(href=""\ntitle=""\n)\n  | foo';
+
+  assert.deepEqual(actual, expected, 'Normalize should work with outdented attributes');
+  assert.end();
+});
