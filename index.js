@@ -19,6 +19,8 @@ function getCodeBlockEnd(src) {
   var i = 0;
   var token;
 
+  console.log(src);
+
   while (token = tokens[i++]) {
 
     // increase for indent
@@ -116,7 +118,9 @@ function normalize(lines) {
   var i = 0;
   var l = lines.length;
   for(; i<l; ++i){
-    lines[i] = lines[i].substring(indentLevel);
+    if (getIndentLevel(lines[i]) >= indentLevel) {
+      lines[i] = lines[i].substring(indentLevel);
+    }
   }
   return lines;
 }

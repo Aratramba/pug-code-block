@@ -48,3 +48,11 @@ test('By line: linenumber out of range', function(assert){
   assert.equal(actual, expected, 'Line 100 should return an empty string.');
   assert.end();
 });
+
+test('By line: weird attributes indentation', function(assert){
+  var actual = byLine(source, 47);
+  var expected = 'p\n  a(href="",\ntitle=""\n)\n    | foo';
+
+  assert.equal(actual, expected, 'should work with funny looking attributes');
+  assert.end();
+});
