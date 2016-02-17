@@ -19,8 +19,6 @@ function getCodeBlockEnd(src) {
   var i = 0;
   var token;
 
-  console.log(src);
-
   while (token = tokens[i++]) {
 
     // increase for indent
@@ -60,38 +58,22 @@ module.exports.getCodeBlockEnd = getCodeBlockEnd;
  */
 
 function getCodeBlock(src, lineNumber) {
-  var lines = src.split('\n');
+  var lines = slice(src, lineNumber);
 
-  if(lineNumber <= 0 || lineNumber > lines.length){
+  if (!lines.length) {
     return '';
   }
-
-  // create smaller portion from line number to end
-  lines = lines.slice(lineNumber - 1);
-
-  // reset base indent
-  lines = normalize(lines);
-
-  // add final newline
-  lines.push('\n');
 
   // get end of block
   var blockEnd = getCodeBlockEnd(lines.join('\n'));
 
+  console.log(blockEnd);
+
   // get the block we need
   lines = lines.slice(0, blockEnd - 1);
 
-  if (lines.length) {
-    // remove empty lines at the end
-    var j = lines.length;
-    while(--j){
-      if(lines[j].trim() === '') {
-        lines.pop();
-        continue;
-      }
-      break;
-    }
-  }
+  // remove newlines from end
+  lines = trim(lines);
 
   return lines.join('\n');
 }
@@ -130,6 +112,50 @@ module.exports.normalize = normalize;
 
 
 /**
+ * create smaller portion from line number to end
+ */
+
+function slice(src, lineNumber) {
+  var lines = src.split('\n');
+
+  if(lineNumber <= 0 || lineNumber > lines.length){
+    return '';
+  }
+
+  // create smaller portion from line number to end
+  lines = lines.slice(lineNumber - 1);
+
+  // append newline
+  lines.push('\n');
+
+  // reset base indent
+  lines = normalize(lines);
+
+  return lines;
+}
+
+
+/**
+ * remove empty lines from the end
+ */
+
+function trim(lines) {
+  if (lines.length) {
+    var j = lines.length;
+    while(--j){
+      if(lines[j].trim() === '') {
+        lines.pop();
+        continue;
+      }
+      break;
+    }
+  }
+  return lines;
+}
+
+
+
+/**
  * Get indent level of line
  */
 
@@ -150,6 +176,7 @@ function byLine(src, lineNumber){
 }
 
 module.exports.byLine = byLine;
+
 
 
 /**
@@ -182,3 +209,30 @@ function byString(src, string){
 }
 
 module.exports.byString = byString;
+
+
+
+/**
+ * get code block after line
+ */
+
+function getCodeBlockAfterBlockAtLine(src, lineNumber) {
+  var lines = slice(src, lineNumber);
+
+  if (!lines.length) {
+    return '';
+  }
+
+  // get end of block
+  var blockEnd = getCodeBlockEnd(lines.join('\n'));
+
+  // get the block we need
+  var nextBlock = getCodeBlock(lines.join('\n'), blockEnd);
+
+  // remove newlines from end
+  nextBlock = trim(nextBlock);
+
+  return nextBlock;
+}
+
+module.exports.getCodeBlockAfterBlockAtLine = getCodeBlockAfterBlockAtLine;
