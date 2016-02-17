@@ -43,30 +43,9 @@ getCodeBlock.byString(source, 'body');
 var source = fs.readFileSync('./doc.jade', 'utf8');
 
 var getCodeBlock = require('pug-code-block');
-getCodeBlock.afterBlockAtLine(source, 3);
+getCodeBlock.getCodeBlockAfterBlockAtLine(source, 3);
 
 //  body
 //    h1 Hello #{name}
 //    p foo
-```
-
-### Get block before block at line
-```js
-var source = fs.readFileSync('./doc.jade', 'utf8');
-
-var getCodeBlock = require('pug-code-block');
-getCodeBlock.beforeBlockAtLine(source, 5);
-
-//  head
-//    title my jade template
-```
-
-### Normalize code block
-Resets the code block to zero indents at its base.
-
-```js
-var getCodeBlock = require('pug-code-block');
-getCodeBlock.normalize('        div\n          div')
-
-// div\n  div
 ```

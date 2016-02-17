@@ -41,14 +41,6 @@ test('After block at line', function(assert){
 });
 
 test('After block at line: none', function(assert){
-  var actual = getCodeBlockAfterBlockAtLine(source, 53);
-  var expected = '';
-
-  assert.equal(actual, expected, 'After block at line should return an empty string if there is no match.');
-  assert.end();
-});
-
-test('After block at line: none', function(assert){
   var actual = getCodeBlockAfterBlockAtLine(source, 20);
   var expected = '';
 

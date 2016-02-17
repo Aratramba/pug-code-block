@@ -56,3 +56,11 @@ test('By line: weird attributes indentation', function(assert){
   assert.equal(actual, expected, 'should work with funny looking attributes');
   assert.end();
 });
+
+test('By line: weird attributes indentation', function(assert){
+  var actual = byLine(source, 56);
+  var expected = 'foo(abc\n   ,def)';
+
+  assert.equal(actual, expected, 'should work with funny looking attributes');
+  assert.end();
+});
