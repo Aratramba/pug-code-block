@@ -182,7 +182,7 @@ function byString(src, string){
   // find line
   for(; i<l; ++i){
     if(lines[i].indexOf(string) > -1){
-      matches.push(getCodeBlock(src, i + 1));
+      matches.push(byLine(src, i + 1));
     }
   }
 
@@ -205,7 +205,7 @@ module.exports.byString = byString;
  * get code block(s) after line
  */
 
-function getCodeBlock(src, lineNumber, limit) {
+function byLine(src, lineNumber, limit) {
   var lines = slice(src, lineNumber);
 
   if (!lines.length) {
@@ -279,5 +279,4 @@ function getCodeBlock(src, lineNumber, limit) {
   return blocks;
 }
 
-module.exports.getCodeBlock = getCodeBlock;
-module.exports.byLine = getCodeBlock;
+module.exports.byLine = byLine;
