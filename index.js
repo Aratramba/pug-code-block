@@ -13,7 +13,6 @@ var WHITESPACE_REGEX = /^\s*/g;
 
 function getCodeBlockEnd(src) {
   var tokens = lex(src);
-  var indent = 0;
   var end = 0;
 
   var i = 0;
@@ -67,35 +66,6 @@ module.exports.getCodeBlockEnd = getCodeBlockEnd;
 
 
 /**
- * Get code block
- */
-
-function getCodeBlock(src, lineNumber) {
-  var lines = slice(src, lineNumber);
-
-  if (!lines.length) {
-    return '';
-  }
-
-  // get end of block
-  var blockEnd = getCodeBlockEnd(lines.join('\n'));
-
-  // get the block we need
-  console.log(lines);
-  lines = lines.slice(0, blockEnd - 1);
-  console.log(lines);
-
-  // remove newlines from end
-  lines = trim(lines);
-
-  return lines.join('\n');
-}
-
-module.exports.getCodeBlock = getCodeBlock;
-
-
-
-/**
  * Normalize indentation
  */
 
@@ -112,6 +82,7 @@ function normalize(lines) {
 
   var i = 0;
   var l = lines.length;
+
   for(; i<l; ++i){
     if (getIndentLevel(lines[i]) >= indentLevel) {
       lines[i] = lines[i].substring(indentLevel);
@@ -149,7 +120,7 @@ function slice(src, lineNumber) {
 
 
 /**
- * remove empty lines from the end
+ * remove empty lines from the start / end
  */
 
 function trim(lines) {
@@ -162,6 +133,16 @@ function trim(lines) {
       }
       break;
     }
+
+    var i = 0;
+    while(i < lines.length){
+      if(lines[i].trim() === '') {
+        lines.shift();
+        continue;
+      }
+      break;
+    }
+    ++i;
   }
   return lines;
 }
@@ -181,18 +162,6 @@ module.exports.getIndentLevel = getIndentLevel;
 
 
 /**
- * get code block by line
- */
-
-function byLine(src, lineNumber){
-  return getCodeBlock(src, lineNumber);
-}
-
-module.exports.byLine = byLine;
-
-
-
-/**
  * get code block by string
  */
 
@@ -206,7 +175,7 @@ function byString(src, string){
   // find line
   for(; i<l; ++i){
     if(lines[i].indexOf(string) > -1){
-      matches.push(byLine(src, i + 1));
+      matches.push(getCodeBlock(src, i + 1));
     }
   }
 
@@ -226,26 +195,60 @@ module.exports.byString = byString;
 
 
 /**
- * get code block after line
+ * get code block(s) after line
  */
 
-function getCodeBlockAfterBlockAtLine(src, lineNumber) {
+function getCodeBlock(src, lineNumber, limit) {
   var lines = slice(src, lineNumber);
 
   if (!lines.length) {
     return '';
   }
 
-  // get end of block
-  var blockEnd = getCodeBlockEnd(lines.join('\n'));
+  // no idea why anyone would do this
+  if (limit === 0) {
+    return '';
+  }
 
-  // get the block we need
-  var nextBlock = getCodeBlock(lines.join('\n'), blockEnd);
+  limit = limit || 1;
+  var blocks = [];
+  var blockEnd;
+  var nextBlock;
 
-  // remove newlines from end
-  nextBlock = trim(nextBlock);
+  for(var i = 0; i < limit; i++) {
+    if (blockEnd) {
+      lines = lines.slice(blockEnd - 1);
+    }
 
-  return nextBlock;
+    lines = trim(lines);
+
+    // get end of block
+    blockEnd = getCodeBlockEnd(lines.join('\n'));
+
+    // get the block we need
+    nextBlock = lines.slice(0, blockEnd -1);
+
+    // remove newlines from end
+    nextBlock = trim(nextBlock);
+
+    // stringify
+    nextBlock = nextBlock.join('\n');
+
+    // push
+    blocks.push(nextBlock);
+
+    // blocks.push(nextBlock);
+    if (nextBlock.trim() === '') {
+      break;
+    }
+  }
+
+  if (blocks.length === 1) {
+    return blocks[0];
+  }
+
+  return blocks;
 }
 
-module.exports.getCodeBlockAfterBlockAtLine = getCodeBlockAfterBlockAtLine;
+module.exports.getCodeBlock = getCodeBlock;
+module.exports.byLine = getCodeBlock;

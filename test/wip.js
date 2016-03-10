@@ -1,9 +1,10 @@
-// 'use strict';
-// /* global require */
+'use strict';
+/* global require */
 
-// var byLine = require('../index').byLine;
-// var fs = require('fs');
+var getCodeBlock = require('../index').getCodeBlock;
+var fs = require('fs');
 
 // var source = fs.readFileSync('./test/fixtures/doc.jade', 'utf8');
 
-// console.log(byLine(source, 56));
+// var arr = getCodeBlock(source, 33, 5);
+// console.log(arr);

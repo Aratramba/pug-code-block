@@ -24,6 +24,22 @@ getCodeBlock.byLine(source, 3);
 //   title my jade template
 ```
 
+Optionally provide a limit of captures. Default limit is 1.
+
+```js
+var source = fs.readFileSync('./doc.jade', 'utf8');
+
+var getCodeBlock = require('pug-code-block');
+getCodeBlock.byLine(source, 1, 3);
+
+// div 1
+// div 2
+// div 3
+// div -
+// div -
+```
+
+
 ### Get block at string match
 Will return a string for a single match, an array of code blocks for multiple matches.
 
@@ -36,16 +52,4 @@ getCodeBlock.byString(source, 'body');
 // body
 //   h1 Hello #{name}
 //   p foo
-```
-
-### Get block after block at line
-```js
-var source = fs.readFileSync('./doc.jade', 'utf8');
-
-var getCodeBlock = require('pug-code-block');
-getCodeBlock.getCodeBlockAfterBlockAtLine(source, 3);
-
-//  body
-//    h1 Hello #{name}
-//    p foo
 ```
