@@ -2,7 +2,7 @@ mixin foo
   div
     | foo
     | foo
-
+    
 mixin bar
   div
     | bar
@@ -44,3 +44,53 @@ mixin bar
     
     | bar 2
 
+p
+  a(href="",
+title=""
+)
+    | foo
+
+| faa
+
+foo(abc="", def="")
+
+foo(abc,
+    def)
+
+foo(abc
+    ,def)
+foo(abc
+    def)
+  foo(abc
+      def)
+
+a(href='/contact') contact
+a(href='/save').button save
+a(foo, bar, baz)
+a(foo='foo, bar, baz', bar=1)
+a(foo='((foo))', bar= (1) ? 1 : 0 )
+select
+  option(value='foo', selected) Foo
+  option(selected, value='bar') Bar
+a(foo="class:")
+input(pattern='\\S+')
+
+a(href='/contact') contact
+a(href='/save').button save
+a(foo bar baz)
+a(foo='foo, bar, baz' bar=1)
+a(foo='((foo))' bar= (1) ? 1 : 0 )
+select
+  option(value='foo' selected) Foo
+  option(selected value='bar') Bar
+a(foo="class:")
+input(pattern='\\S+')
+foo(terse="true")
+foo(date=new Date(0))
+
+- var attrs = {foo: 'bar', bar: '<baz>'}
+
+div&attributes(attrs)
+
+a(foo='foo' "bar"="bar")
+a(foo='foo' 'bar'='bar')

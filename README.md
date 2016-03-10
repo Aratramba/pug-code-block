@@ -14,18 +14,36 @@ html
 ```
 
 ### Get block at line number
+Will return a string for a single match, an array of code blocks for multiple matches.
+
 ```js
 var source = fs.readFileSync('./doc.jade', 'utf8');
 
 var getCodeBlock = require('pug-code-block');
-getCodeBlock.byLine(source, 3);
+getCodeBlock.byLine(source, 2);
 
 // head
 //   title my jade template
 ```
 
+Optionally provide a limit of blocks to be captured. Default limit is 1. Use `Infinity` if you want to capture all blocks.
+
+```js
+var source = fs.readFileSync('./doc.jade', 'utf8');
+
+var getCodeBlock = require('pug-code-block');
+getCodeBlock.byLine(source, 1, 3);
+
+// div yep
+// div yep
+// div yep
+// div nope
+// div nope
+```
+
+
 ### Get block at string match
-Will return a string for a single match, an array of code blocks when multiple matches are found.
+Will return a string for a single match, an array of code blocks for multiple matches.
 
 ```js
 var source = fs.readFileSync('./doc.jade', 'utf8');
@@ -36,37 +54,4 @@ getCodeBlock.byString(source, 'body');
 // body
 //   h1 Hello #{name}
 //   p foo
-```
-
-### Get block after block at line
-```js
-var source = fs.readFileSync('./doc.jade', 'utf8');
-
-var getCodeBlock = require('pug-code-block');
-getCodeBlock.afterBlockAtLine(source, 3);
-
-//  body
-//    h1 Hello #{name}
-//    p foo
-```
-
-### Get block before block at line
-```js
-var source = fs.readFileSync('./doc.jade', 'utf8');
-
-var getCodeBlock = require('pug-code-block');
-getCodeBlock.beforeBlockAtLine(source, 5);
-
-//  head
-//    title my jade template
-```
-
-### Normalize code block
-Resets the code block to zero indents at its base.
-
-```js
-var getCodeBlock = require('pug-code-block');
-getCodeBlock.normalize('        div\n          div')
-
-// div\n  div
 ```
