@@ -50,6 +50,10 @@ test('By line', function(assert){
   actual = byLine(source, 28);
   expected = '//- some comment\n  some indented comment\n  some indented comment';
   assert.equal(actual, expected, 'should be code block at line 28');
+  
+  actual = byLine(source, 91);
+  expected = '- var attrs = {foo: \'bar\', bar: \'<baz>\'}';
+  assert.equal(actual, expected, 'should be code block at line 91');
 
   assert.end();
 });
@@ -70,7 +74,7 @@ test('By line out of bounds', function(assert){
   expected = '';
   assert.equal(actual, expected, 'should be empty at line -10');
   
-  actual = byLine(source, 100);
+  actual = byLine(source, 1000);
   expected = '';
   assert.equal(actual, expected, 'should be empty at line 100');
 
@@ -102,12 +106,16 @@ test('By line with limit', function(assert){
   assert.deepEqual(actual, expected, 'should be an array');
 
   actual = byLine(source, 1, Infinity).length;
-  expected = 16;
+  expected = 37;
   assert.equal(actual, expected, 'should be an array containing all elements');
  
   actual = byLine(source, 33, 5).length;
   expected = 2;
   assert.deepEqual(actual, expected, 'should not capture blocks with less indentation');
+  
+  actual = byLine(source, 71, 2);
+  expected = ['a(foo=\'((foo))\', bar= (1) ? 1 : 0 )', 'select\n  option(value=\'foo\', selected) Foo\n  option(selected, value=\'bar\') Bar'];
+  assert.deepEqual(actual, expected, 'should be code block at line 71');
 
   assert.end();
 });
@@ -125,7 +133,15 @@ test('By line: weird attributes indentation', function(assert){
   assert.equal(actual, expected, 'should work with funny looking attributes');
 
   actual = byLine(source, 56);
-  expected = 'foo(abc\n   ,def)';
+  expected = 'foo(abc,\n    def)';
+  assert.equal(actual, expected, 'should work with funny looking attributes');
+
+  actual = byLine(source, 60);
+  expected = 'foo(abc\n    ,def)';
+  assert.equal(actual, expected, 'should work with funny looking attributes');
+
+  actual = byLine(source, 62);
+  expected = 'foo(abc\n    def)\n  foo(abc\n      def)';
   assert.equal(actual, expected, 'should work with funny looking attributes');
 
   assert.end();

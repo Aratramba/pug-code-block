@@ -18,7 +18,7 @@ test('By string: mixin bar', function(assert){
 
 test('By string: div', function(assert){
   var actual = byString(source, 'div').length;
-  var expected = 9;
+  var expected = 10;
 
   assert.deepEqual(actual, expected, 'Searching for "div" should return an array.');
   assert.end();

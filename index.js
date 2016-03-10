@@ -14,6 +14,7 @@ var WHITESPACE_REGEX = /^\s*/g;
 function getCodeBlockEnd(src) {
   src = normalize(src);
   src = src.join('\n');
+  src += '\n| eof';
   var tokens = lex(src);
   var end = 0;
 
@@ -22,6 +23,7 @@ function getCodeBlockEnd(src) {
   var pipeless = 0;
   var attributes = 0;
   var token;
+  var isReset;
 
   while (token = tokens[i++]) {
 
@@ -52,13 +54,14 @@ function getCodeBlockEnd(src) {
 
     end = token.line;
 
-    var isReset = Boolean(indents === 0 && pipeless === 0 && attributes === 0);
+    isReset = Boolean(indents === 0 && pipeless === 0 && attributes === 0);
 
     // quit at indent match
-    if (i > 1 && isReset) {
+    if (i > 1 && isReset && (token.type === 'newline' || token.type === 'outdent')) {
       break;
     }
   }
+
 
   return end;
 }
@@ -219,6 +222,8 @@ function getCodeBlock(src, lineNumber, limit) {
   var blockEnd;
   var nextBlock;
 
+  lines = trim(lines);
+  
   var indentLevel = getIndentLevel(lines[0]);
   var nextBlockIndentLevel;
 
@@ -227,13 +232,14 @@ function getCodeBlock(src, lineNumber, limit) {
       lines = lines.slice(blockEnd - 1);
     }
 
+    // remove empty lines from start / end
     lines = trim(lines);
 
-    // get end of block
+    // get end of code block
     blockEnd = getCodeBlockEnd(lines);
 
     // get the block we need
-    nextBlock = lines.slice(0, blockEnd -1);
+    nextBlock = lines.slice(0, blockEnd - 1);
 
     if (!nextBlock.length) {
       break;
@@ -260,6 +266,10 @@ function getCodeBlock(src, lineNumber, limit) {
     if (nextBlock.trim() === '') {
       break;
     }
+  }
+
+  if (blocks.length === 0) {
+    return '';
   }
 
   if (blocks.length === 1) {
