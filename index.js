@@ -213,7 +213,7 @@ function byLine(src, lineNumber, limit) {
   }
 
   // no idea why anyone would do this
-  if (limit === 0) {
+  if (limit < 1) {
     return '';
   }
 

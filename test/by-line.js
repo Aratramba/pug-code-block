@@ -93,6 +93,10 @@ test('By line with limit', function(assert){
   expected = '';
   assert.equal(actual, expected, 'should be an empty string');
 
+  actual = byLine(source, 1, -1);
+  expected = '';
+  assert.equal(actual, expected, 'should be an empty string');
+
   actual = byLine(source, 1, 1);
   expected = 'mixin foo\n  div\n    | foo\n    | foo';
   assert.equal(actual, expected, 'should be a string with one result');
