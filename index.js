@@ -2,6 +2,7 @@
 /* global require, module */
 
 var lex = require('pug-lexer');
+var rebaseIndent = require('rebase-indent');
 
 var WHITESPACE_REGEX = /^\s*/g;
 
@@ -12,7 +13,7 @@ var WHITESPACE_REGEX = /^\s*/g;
  */
 
 function getCodeBlockEnd(src) {
-  src = normalize(src);
+  src = rebaseIndent(src);
   src = src.join('\n');
   src += '\n| eof';
   var tokens = lex(src);
@@ -71,38 +72,6 @@ module.exports.getCodeBlockEnd = getCodeBlockEnd;
 
 
 /**
- * Normalize indentation
- */
-
-function normalize(lines) {
-  lines = lines.slice(0);
-
-  if (!lines.length) {
-    return lines;
-  }
-
-  var indentLevel = getIndentLevel(lines[0]);
-
-  if(indentLevel === 0){
-    return lines;
-  }
-
-  var i = 0;
-  var l = lines.length;
-
-  for(; i<l; ++i){
-    if (getIndentLevel(lines[i]) >= indentLevel) {
-      lines[i] = lines[i].substring(indentLevel);
-    }
-  }
-  return lines;
-}
-
-module.exports.normalize = normalize;
-
-
-
-/**
  * create smaller portion from line number to end
  */
 
@@ -118,9 +87,6 @@ function slice(src, lineNumber) {
 
   // append newline
   lines.push('\n');
-
-  // reset base indent
-  // lines = normalize(lines);
 
   return lines;
 }
@@ -254,7 +220,7 @@ function byLine(src, lineNumber, limit) {
     nextBlock = trim(nextBlock);
 
     // normalize block
-    nextBlock = normalize(nextBlock);
+    nextBlock = rebaseIndent(nextBlock);
 
     // stringify
     nextBlock = nextBlock.join('\n');
