@@ -148,5 +148,9 @@ test('By line: weird attributes indentation', function(assert){
   expected = 'foo(abc\n    def)\n  foo(abc\n      def)';
   assert.equal(actual, expected, 'should work with funny looking attributes');
 
+  actual = byLine(source, 99);
+  expected = 'foo(abc\ndef)';
+  assert.equal(actual, expected, 'should work with funny looking attributes');
+
   assert.end();
 });
