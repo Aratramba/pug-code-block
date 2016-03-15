@@ -3,8 +3,7 @@
 
 var lex = require('pug-lexer');
 var rebaseIndent = require('rebase-indent');
-
-var WHITESPACE_REGEX = /^\s*/g;
+var detectIndent = require('detect-indent');
 
 
 /**
@@ -121,19 +120,6 @@ function trim(lines) {
 }
 
 
-
-/**
- * Get indent level of line
- */
-
-function getIndentLevel(line){
-  return line.match(WHITESPACE_REGEX)[0].length;
-}
-
-module.exports.getIndentLevel = getIndentLevel;
-
-
-
 /**
  * get code block by string
  */
@@ -190,7 +176,7 @@ function byLine(src, lineNumber, limit) {
 
   lines = trim(lines);
   
-  var indentLevel = getIndentLevel(lines[0]);
+  var indentLevel = detectIndent(lines[0]).indent.length;
   var nextBlockIndentLevel;
 
   for(var i = 0; i < limit; i++) {
@@ -211,7 +197,7 @@ function byLine(src, lineNumber, limit) {
       break;
     }
 
-    nextBlockIndentLevel = getIndentLevel(nextBlock[0]);
+    nextBlockIndentLevel = detectIndent(nextBlock[0]).indent.length;
     if (nextBlockIndentLevel < indentLevel) {
       break;
     }
