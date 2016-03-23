@@ -1,6 +1,6 @@
 {
   "name": "pug-code-block",
-  "version": "3.3.0",
+  "version": "3.4.0",
   "description": "get Pug code block",
   "main": "index.js",
   "scripts": {
@@ -32,6 +32,6 @@
   "dependencies": {
     "detect-indent": "^4.0.0",
     "pug-lexer": "^1.0.0",
-    "rebase-indent": "^1.4.0"
+    "rebase-indent": "^1.5.0"
   }
 }
