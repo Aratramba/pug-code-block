@@ -1,10 +1,10 @@
 {
   "name": "pug-code-block",
-  "version": "3.2.0",
+  "version": "3.3.0",
   "description": "get Pug code block",
   "main": "index.js",
   "scripts": {
-    "test": "tape test/**/*.js | faucet"
+    "test": "tape 'test/!(wip)*.js' | faucet"
   },
   "repository": {
     "type": "git",
@@ -32,6 +32,6 @@
   "dependencies": {
     "detect-indent": "^4.0.0",
     "pug-lexer": "^1.0.0",
-    "rebase-indent": "^1.1.0"
+    "rebase-indent": "^1.4.0"
   }
 }

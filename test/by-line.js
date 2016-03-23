@@ -110,12 +110,16 @@ test('By line with limit', function(assert){
   assert.deepEqual(actual, expected, 'should be an array');
 
   actual = byLine(source, 1, Infinity).length;
-  expected = 37;
+  expected = 39;
   assert.equal(actual, expected, 'should be an array containing all elements');
  
   actual = byLine(source, 33, 5).length;
   expected = 2;
   assert.deepEqual(actual, expected, 'should not capture blocks with less indentation');
+ 
+  actual = byLine(source, 33);
+  expected = 'div\n  | foo\n  | faa';
+  assert.deepEqual(actual, expected, 'should capture only one indented block');
   
   actual = byLine(source, 71, 2);
   expected = ['a(foo=\'((foo))\', bar= (1) ? 1 : 0 )', 'select\n  option(value=\'foo\', selected) Foo\n  option(selected, value=\'bar\') Bar'];

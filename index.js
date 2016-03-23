@@ -12,9 +12,9 @@ var detectIndent = require('detect-indent');
  */
 
 function getCodeBlockEnd(src) {
-  src = rebaseIndent(src);
+  src = rebaseIndent(src, 0, true);
   src = src.join('\n');
-  src += '\n| eof';
+  src += '\n| eos';
   var tokens = lex(src);
   var end = 0;
 
