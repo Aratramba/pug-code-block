@@ -47,3 +47,11 @@ test('By string: first line', function(assert){
   assert.equal(actual, expected, 'Searching for "mixin foo" should return a complete mixin.');
   assert.end();
 });
+
+test('By string: regex', function(assert){
+  var actual = byString(source, /mIXin\sfOO/i);
+  var expected = 'mixin foo\n  div\n    | foo\n    | foo';
+
+  assert.equal(actual, expected, 'Searching for /mixin\sfoo/ should return a complete mixin.');
+  assert.end();
+});

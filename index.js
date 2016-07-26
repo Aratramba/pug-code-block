@@ -121,10 +121,10 @@ function trim(lines) {
 
 
 /**
- * get code block by string
+ * get code block by string or regex
  */
 
-function byString(src, string){
+function byString(src, needle){
   var lines = src.split('\n');
   var i = 0;
   var l = lines.length;
@@ -132,8 +132,20 @@ function byString(src, string){
   var matches = [];
 
   // find line
+  var match;
   for(; i<l; ++i){
-    if(lines[i].indexOf(string) > -1){
+    match = false;
+    if (needle instanceof RegExp) {
+      if (needle.test(lines[i])) {
+        match = true;
+      }
+    } else {
+      if(lines[i].indexOf(needle) > -1){
+        match = true;
+      }
+    }
+    
+    if (match) {
       matches.push(byLine(src, i + 1));
     }
   }

@@ -43,13 +43,24 @@ getCodeBlock.byLine(source, 1, 3);
 
 
 ### Get block at string match
-Will return a string for a single match, an array of code blocks for multiple matches.
+Will return a string for a single match, an array of code blocks for multiple matches. Arguments can be a string or regex.
 
 ```js
 var source = fs.readFileSync('./doc.jade', 'utf8');
 
 var getCodeBlock = require('pug-code-block');
 getCodeBlock.byString(source, 'body');
+
+// body
+//   h1 Hello #{name}
+//   p foo
+```
+
+```js
+var source = fs.readFileSync('./doc.jade', 'utf8');
+
+var getCodeBlock = require('pug-code-block');
+getCodeBlock.byString(source, /body/);
 
 // body
 //   h1 Hello #{name}
