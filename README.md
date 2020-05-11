@@ -17,9 +17,9 @@ html
 Will return a string for a single match, an array of code blocks for multiple matches.
 
 ```js
-var source = fs.readFileSync('./doc.pug', 'utf8');
+const source = fs.readFileSync('./doc.pug', 'utf8');
 
-var getCodeBlock = require('pug-code-block');
+const getCodeBlock = require('pug-code-block');
 getCodeBlock.byLine(source, 2);
 
 // head
@@ -29,9 +29,9 @@ getCodeBlock.byLine(source, 2);
 Optionally provide a limit of blocks to be captured. Default limit is 1. Use `Infinity` if you want to capture all blocks.
 
 ```js
-var source = fs.readFileSync('./doc.pug', 'utf8');
+const source = fs.readFileSync('./doc.pug', 'utf8');
 
-var getCodeBlock = require('pug-code-block');
+const getCodeBlock = require('pug-code-block');
 getCodeBlock.byLine(source, 1, 3);
 
 // div yep
@@ -46,9 +46,9 @@ getCodeBlock.byLine(source, 1, 3);
 Will return a string for a single match, an array of code blocks for multiple matches. Arguments can be a string or regex.
 
 ```js
-var source = fs.readFileSync('./doc.pug', 'utf8');
+const source = fs.readFileSync('./doc.pug', 'utf8');
 
-var getCodeBlock = require('pug-code-block');
+const getCodeBlock = require('pug-code-block');
 getCodeBlock.byString(source, 'body');
 
 // body
@@ -57,9 +57,9 @@ getCodeBlock.byString(source, 'body');
 ```
 
 ```js
-var source = fs.readFileSync('./doc.pug', 'utf8');
+const source = fs.readFileSync('./doc.pug', 'utf8');
 
-var getCodeBlock = require('pug-code-block');
+const getCodeBlock = require('pug-code-block');
 getCodeBlock.byString(source, /body/);
 
 // body
