@@ -1,18 +1,11 @@
-var byLine = require("../index").byLine;
+const byLine = require("../index").byLine;
 
 console.log(
   byLine(
     `
-    //- @pugdoc
-    | foo
-
-
-  //- @pugdoc
-    example: |
-      foo
-
-  | foo
-| test
+  foo(
+)
+  faa
 `,
     1
   )
