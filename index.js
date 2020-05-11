@@ -48,7 +48,7 @@ function getCodeBlockEnd(src) {
       attributes--;
     }
 
-    end = token.line;
+    end = token.loc.end.line;
 
     isReset = Boolean(indents === 0 && pipeless === 0 && attributes === 0);
 
