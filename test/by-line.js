@@ -1,15 +1,15 @@
-var test = require("tape");
-var fs = require("fs");
-var byLine = require("../index").byLine;
+const test = require("tape");
+const fs = require("fs");
+const byLine = require("../index").byLine;
 
-var source = fs.readFileSync("./test/fixtures/doc.pug", "utf8");
+const source = fs.readFileSync("./test/fixtures/doc.pug", "utf8");
 
 /**
  * Test line numbers
  */
 
 test("By line", function (assert) {
-  var actual, expected;
+  let actual, expected;
 
   actual = byLine(source, 1);
   expected = "mixin foo\n  div\n    | foo\n    | foo";
@@ -60,7 +60,7 @@ test("By line", function (assert) {
  */
 
 test("By line out of bounds", function (assert) {
-  var actual, expected;
+  let actual, expected;
 
   actual = byLine(source, 0);
   expected = "";
@@ -82,7 +82,7 @@ test("By line out of bounds", function (assert) {
  */
 
 test("By line with limit", function (assert) {
-  var actual, expected;
+  let actual, expected;
 
   actual = byLine(source, 1, 0);
   expected = "";
@@ -142,7 +142,7 @@ test("By line with limit", function (assert) {
  */
 
 test("By line: weird attributes indentation", function (assert) {
-  var actual, expected;
+  let actual, expected;
 
   actual = byLine(source, 47);
   expected = 'p\n  a(href="",\ntitle=""\n)\n    | foo';

@@ -1,12 +1,12 @@
-var test = require("tape");
-var fs = require("fs");
-var byString = require("../index").byString;
+const test = require("tape");
+const fs = require("fs");
+const byString = require("../index").byString;
 
-var source = fs.readFileSync("./test/fixtures/doc.pug", "utf8");
+const source = fs.readFileSync("./test/fixtures/doc.pug", "utf8");
 
 test("By string: mixin bar", function (assert) {
-  var actual = byString(source, "mixin bar");
-  var expected = [
+  let actual = byString(source, "mixin bar");
+  let expected = [
     "mixin bar\n  div\n    | bar\n    | bar",
     "mixin bar\n  div\n    | bar 2\n\n    \n    | bar 2",
   ];
@@ -20,8 +20,8 @@ test("By string: mixin bar", function (assert) {
 });
 
 test("By string: div", function (assert) {
-  var actual = byString(source, "div").length;
-  var expected = 10;
+  let actual = byString(source, "div").length;
+  let expected = 10;
 
   assert.deepEqual(
     actual,
@@ -32,8 +32,8 @@ test("By string: div", function (assert) {
 });
 
 test("By string: head", function (assert) {
-  var actual = byString(source, "head");
-  var expected = "head\n  title my pug template";
+  let actual = byString(source, "head");
+  let expected = "head\n  title my pug template";
 
   assert.deepEqual(
     actual,
@@ -44,8 +44,8 @@ test("By string: head", function (assert) {
 });
 
 test("By string: not found", function (assert) {
-  var actual = byString(source, "whatever");
-  var expected = "";
+  let actual = byString(source, "whatever");
+  let expected = "";
 
   assert.equal(
     actual,
@@ -56,8 +56,8 @@ test("By string: not found", function (assert) {
 });
 
 test("By string: first line", function (assert) {
-  var actual = byString(source, "mixin foo");
-  var expected = "mixin foo\n  div\n    | foo\n    | foo";
+  let actual = byString(source, "mixin foo");
+  let expected = "mixin foo\n  div\n    | foo\n    | foo";
 
   assert.equal(
     actual,
@@ -68,8 +68,8 @@ test("By string: first line", function (assert) {
 });
 
 test("By string: regex", function (assert) {
-  var actual = byString(source, /mIXin\sfOO/i);
-  var expected = "mixin foo\n  div\n    | foo\n    | foo";
+  let actual = byString(source, /mIXin\sfOO/i);
+  let expected = "mixin foo\n  div\n    | foo\n    | foo";
 
   assert.equal(
     actual,

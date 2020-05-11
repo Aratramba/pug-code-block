@@ -1,8 +1,8 @@
-var test = require("tape");
-var fs = require("fs");
-var byLine = require("../index").byLine;
+const test = require("tape");
+const fs = require("fs");
+const byLine = require("../index").byLine;
 
-var source = fs.readFileSync("./test/fixtures/doc.pug", "utf8");
+const source = fs.readFileSync("./test/fixtures/doc.pug", "utf8");
 
 test("Pug output", function (assert) {
   const block = byLine(source, 18);
