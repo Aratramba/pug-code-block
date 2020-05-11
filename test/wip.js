@@ -1,9 +1,8 @@
-'use strict';
-/* global require */
+var byLine = require("../index").byLine;
 
-var byLine = require('../index').byLine;
-
-console.log(byLine(`
+console.log(
+  byLine(
+    `
     //- @pugdoc
     | foo
 
@@ -14,4 +13,7 @@ console.log(byLine(`
 
   | foo
 | test
-`, 1));
+`,
+    1
+  )
+);

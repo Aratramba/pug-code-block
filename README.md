@@ -1,13 +1,13 @@
 # Pug code block
-Get Pug (Jade) code at and inside a given line or query.
+Get Pug code at and inside a given line or query.
 
 
-_doc.jade_
-```jade
+_doc.pug_
+```pug
 doctype html
 html
   head
-    title my jade template
+    title my pug template
   body
     h1 Hello #{name}
     p foo
@@ -17,19 +17,19 @@ html
 Will return a string for a single match, an array of code blocks for multiple matches.
 
 ```js
-var source = fs.readFileSync('./doc.jade', 'utf8');
+var source = fs.readFileSync('./doc.pug', 'utf8');
 
 var getCodeBlock = require('pug-code-block');
 getCodeBlock.byLine(source, 2);
 
 // head
-//   title my jade template
+//   title my pug template
 ```
 
 Optionally provide a limit of blocks to be captured. Default limit is 1. Use `Infinity` if you want to capture all blocks.
 
 ```js
-var source = fs.readFileSync('./doc.jade', 'utf8');
+var source = fs.readFileSync('./doc.pug', 'utf8');
 
 var getCodeBlock = require('pug-code-block');
 getCodeBlock.byLine(source, 1, 3);
@@ -46,7 +46,7 @@ getCodeBlock.byLine(source, 1, 3);
 Will return a string for a single match, an array of code blocks for multiple matches. Arguments can be a string or regex.
 
 ```js
-var source = fs.readFileSync('./doc.jade', 'utf8');
+var source = fs.readFileSync('./doc.pug', 'utf8');
 
 var getCodeBlock = require('pug-code-block');
 getCodeBlock.byString(source, 'body');
@@ -57,7 +57,7 @@ getCodeBlock.byString(source, 'body');
 ```
 
 ```js
-var source = fs.readFileSync('./doc.jade', 'utf8');
+var source = fs.readFileSync('./doc.pug', 'utf8');
 
 var getCodeBlock = require('pug-code-block');
 getCodeBlock.byString(source, /body/);

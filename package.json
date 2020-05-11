@@ -25,14 +25,14 @@
   },
   "homepage": "https://github.com/Aratramba/pug-code-block",
   "devDependencies": {
-    "faucet": "0.0.1",
-    "jade": "^1.11.0",
-    "tape": "^4.2.0"
+    "faucet": "^0.0.1",
+    "pug": "^2.0.4",
+    "tape": "^5.0.0"
   },
   "dependencies": {
-    "detect-indent": "^4.0.0",
-    "is-regex": "^1.0.3",
+    "detect-indent": "^6.0.0",
+    "is-regex": "^1.0.5",
     "pug-lexer": "^1.0.0",
-    "rebase-indent": "^1.5.0"
+    "rebase-indent": "^1.6.0"
   }
 }
