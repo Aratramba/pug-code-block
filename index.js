@@ -184,7 +184,7 @@ function byLine(src, lineNumber, limit) {
   const indentLevel = detectIndent(lines[0]).indent.length;
   let nextBlockIndentLevel;
 
-  for (var i = 0; i < limit; i++) {
+  for (let i = 0; i < limit; i++) {
     if (blockEnd) {
       lines = lines.slice(blockEnd - 1);
     }
