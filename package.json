@@ -31,8 +31,8 @@
   },
   "dependencies": {
     "detect-indent": "^6.0.0",
-    "is-regex": "^1.0.5",
-    "pug-lexer": "^4.1.0",
-    "rebase-indent": "^1.6.0"
+    "is-regex": "^1.1.1",
+    "pug-lexer": "^5.0.0",
+    "rebase-indent": "^1.6.1"
   }
 }
